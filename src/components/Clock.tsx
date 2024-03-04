@@ -50,7 +50,11 @@ function Clock() {
           </div>
         </div>
 
-        <div className="timer mt-6 text-8xl">25:00</div>
+        <div className="timer mt-6 text-8xl">
+          {activeButton === "Pomodoro" && `25:00`}
+          {activeButton === "Short Break" && `5:00`}
+          {activeButton === "Long Break" && `15:00`}
+        </div>
 
         <div>
           <button

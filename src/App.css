@@ -1,6 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200..1000&display=swap");
+
 #root {
   max-width: 100%;
   margin: 0 auto;
-
   text-align: center;
+}
+
+.timer {
+  font-family: "Cairo Play", sans-serif;
 }

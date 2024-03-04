@@ -1,22 +1,53 @@
+import { useState } from "react";
+
 function Clock() {
+  const [startBtn, setStartBtn] = useState(false);
+
+  const toggleStart = () => {
+    setStartBtn(!startBtn);
+  };
+
+  console.log(startBtn);
+
   return (
-    <div className="clock-container pl-2 pr-2 ">
-      <div className="m-auto bg-yellow-100 bg-opacity-50 max-w-[450px] min-h-[320px] mt-10 rounded-xl p-2 flex justify-center">
-        <div className="p-1">
-          <button className="btn btn-sm btn-outline btn-accent text-red-100">
-            Pomodoro
-          </button>
+    <div className="clock-container pl-2 pr-2">
+      <div className="m-auto bg-stone-200 bg-opacity-50 max-w-[450px] min-h-[320px] mt-10 rounded-xl p-2 flex flex-col items-center shadow-2xl">
+        <div className="flex flex-wrap justify-center">
+          <div className="p-1">
+            <button className="btn btn-sm btn-outline btn-info text-red-100">
+              Pomodoro
+            </button>
+          </div>
+
+          <div className="p-1">
+            <button className="btn btn-sm btn-outline btn-info text-red-100">
+              Short Break
+            </button>
+          </div>
+
+          <div className="p-1">
+            <button className="btn btn-sm btn-outline btn-info text-red-100">
+              Long break
+            </button>
+          </div>
         </div>
 
-        <div className="p-1">
-          <button className="btn btn-sm btn-outline btn-accent text-red-100">
-            Short Break
-          </button>
-        </div>
+        <div className="timer mt-6 text-8xl">25:00</div>
 
-        <div className="p-1">
-          <button className="btn btn-sm btn-outline btn-accent text-red-100">
-            Long break
+        <div>
+          <button
+            className="btn btn-wide h-14 bg-stone-400 hover:bg-stone-500 mt-14 text-3xl text-blue-50"
+            onClick={toggleStart}
+          >
+            {startBtn ? "Start" : "Pause"}
+          </button>
+
+          <button className="skip-btn">
+            <img
+              className="w-18 btn -mt-4 bg-stone-200"
+              src="./next.png"
+              alt="next image"
+            />
           </button>
         </div>
       </div>

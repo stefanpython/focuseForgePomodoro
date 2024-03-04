@@ -11,7 +11,7 @@ function Navbar() {
       </div>
 
       <div className="navbar-start p-1">
-        <button className="btn btn-outline btn-accent">Settings</button>
+        <button className="btn btn-sm btn-outline btn-warning">Settings</button>
       </div>
     </div>
   );

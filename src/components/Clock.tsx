@@ -1,33 +1,51 @@
 import { useState } from "react";
 
 function Clock() {
+  const [activeButton, setActiveButton] = useState<string>("Pomodoro");
   const [startBtn, setStartBtn] = useState(false);
+
+  const handleButtonClick = (buttonName: string) => {
+    setActiveButton(buttonName);
+  };
 
   const toggleStart = () => {
     setStartBtn(!startBtn);
   };
-
-  console.log(startBtn);
 
   return (
     <div className="clock-container pl-2 pr-2">
       <div className="m-auto bg-stone-200 bg-opacity-50 max-w-[450px] min-h-[320px] mt-10 rounded-xl p-2 flex flex-col items-center shadow-2xl">
         <div className="flex flex-wrap justify-center">
           <div className="p-1">
-            <button className="btn btn-sm btn-outline btn-info text-red-100">
+            <button
+              className={`btn btn-sm btn-outline btn-info text-red-100 ${
+                activeButton === "Pomodoro" && "btn-active"
+              }`}
+              onClick={() => handleButtonClick("Pomodoro")}
+            >
               Pomodoro
             </button>
           </div>
 
           <div className="p-1">
-            <button className="btn btn-sm btn-outline btn-info text-red-100">
+            <button
+              className={`btn btn-sm btn-outline btn-info text-red-100 ${
+                activeButton === "Short Break" && "btn-active"
+              }`}
+              onClick={() => handleButtonClick("Short Break")}
+            >
               Short Break
             </button>
           </div>
 
           <div className="p-1">
-            <button className="btn btn-sm btn-outline btn-info text-red-100">
-              Long break
+            <button
+              className={`btn btn-sm btn-outline btn-info text-red-100 ${
+                activeButton === "Long Break" && "btn-active"
+              }`}
+              onClick={() => handleButtonClick("Long Break")}
+            >
+              Long Break
             </button>
           </div>
         </div>

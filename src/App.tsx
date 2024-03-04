@@ -7,7 +7,6 @@ import Tasks from "./components/Tasks";
 function App() {
   return (
     <div>
-      <h1>Pomodoro</h1>
       <Navbar />
       <Clock />
       <Tasks />

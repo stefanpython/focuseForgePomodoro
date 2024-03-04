@@ -64,13 +64,15 @@ function Clock() {
             {startBtn ? "Start" : "Pause"}
           </button>
 
-          <button className="skip-btn">
-            <img
-              className="w-18 btn -mt-4 bg-stone-200"
-              src="./next.png"
-              alt="next image"
-            />
-          </button>
+          {!startBtn && (
+            <button className="skip-btn">
+              <img
+                className="w-18 btn -mt-4 bg-stone-200"
+                src="./next.png"
+                alt="next image"
+              />
+            </button>
+          )}
         </div>
       </div>
     </div>

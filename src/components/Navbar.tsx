@@ -1,5 +1,3 @@
-import React from "react";
-
 function Navbar() {
   return (
     <div className="navbar navbar-center bg-base-200 space-x-20 sm:space-x-44 md:space-x-96 ">

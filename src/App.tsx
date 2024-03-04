@@ -6,7 +6,7 @@ import Tasks from "./components/Tasks";
 
 function App() {
   return (
-    <div>
+    <div className="bg-base-200 h-screen">
       <Navbar />
       <Clock />
       <Tasks />

@@ -2,9 +2,28 @@ import { useState, useEffect } from "react";
 
 function Clock() {
   const [activeButton, setActiveButton] = useState<string>("Pomodoro");
-  const [startBtn, setStartBtn] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
-  const [counter, setCounter] = useState(1);
+  const [startBtn, setStartBtn] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(25 * 60);
+  const [counter, setCounter] = useState<number>(0);
+  const [round, setRound] = useState<number>(-1);
+
+  // Increment round by 1 after going through a pomodoro + short/long break
+  useEffect(() => {
+    if (activeButton === "Pomodoro" && timeLeft === 1499) {
+      setCounter((prev) => prev + 1);
+    } else if (
+      (activeButton === "Short Break" && timeLeft === 299) ||
+      (activeButton === "Long Break" && timeLeft === 899)
+    ) {
+      setCounter((prev) => prev + 1);
+    }
+  }, [timeLeft]);
+
+  useEffect(() => {
+    if (counter % 2 === 0) {
+      setRound((prev) => prev + 1);
+    }
+  }, [counter]);
 
   // Create an audio element with the sound file
   const startSound = new Audio("./click.mp3");
@@ -42,13 +61,13 @@ function Clock() {
     setActiveButton(buttonName);
     switch (buttonName) {
       case "Pomodoro":
-        setTimeLeft(3);
+        setTimeLeft(25 * 60);
         break;
       case "Short Break":
-        setTimeLeft(3);
+        setTimeLeft(5 * 60);
         break;
       case "Long Break":
-        setTimeLeft(3);
+        setTimeLeft(15 * 60);
         break;
     }
   };
@@ -62,6 +81,17 @@ function Clock() {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  const handleResetRound = () => {
+    const confirmation = window.confirm(
+      "Are you sure you want to reset session?"
+    );
+    if (confirmation) {
+      setRound(1);
+    } else {
+      return;
+    }
   };
 
   return (
@@ -145,8 +175,8 @@ function Clock() {
       </div>
 
       <div className="counter-container mt-4">
-        <button>
-          <p>{counter}#</p>
+        <button onClick={handleResetRound}>
+          <p>{round}#</p>
         </button>
 
         {activeButton === "Short Break" || activeButton === "Long Break" ? (

@@ -4,6 +4,7 @@ function Clock() {
   const [activeButton, setActiveButton] = useState<string>("Pomodoro");
   const [startBtn, setStartBtn] = useState(false);
   const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [counter, setCounter] = useState(1);
 
   // Create an audio element with the sound file
   const startSound = new Audio("./click.mp3");
@@ -27,6 +28,9 @@ function Clock() {
       intervalId = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
+    } else if (timeLeft === 0) {
+      handleButtonClick("Pomodoro");
+      setStartBtn(false);
     } else {
       clearInterval(intervalId);
     }
@@ -38,13 +42,13 @@ function Clock() {
     setActiveButton(buttonName);
     switch (buttonName) {
       case "Pomodoro":
-        setTimeLeft(25 * 60);
+        setTimeLeft(3);
         break;
       case "Short Break":
-        setTimeLeft(5 * 60);
+        setTimeLeft(3);
         break;
       case "Long Break":
-        setTimeLeft(15 * 60);
+        setTimeLeft(3);
         break;
     }
   };
@@ -63,7 +67,7 @@ function Clock() {
   return (
     <div className="clock-container pl-2 pr-2">
       <progress
-        className="progress progress-accent max-w-96 -mb-5"
+        className="progress progress-accent w-80 sm:w-96 -mb-5"
         value={progressValue}
         max="100"
       ></progress>
@@ -76,7 +80,7 @@ function Clock() {
                 activeButton === "Pomodoro" && "btn-active"
               }`}
               onClick={() => {
-                handleButtonClick("Pomodoro"), setStartBtn(!startBtn);
+                handleButtonClick("Pomodoro"), setStartBtn(false);
               }}
             >
               Pomodoro
@@ -89,7 +93,7 @@ function Clock() {
                 activeButton === "Short Break" && "btn-active"
               }`}
               onClick={() => {
-                handleButtonClick("Short Break"), setStartBtn(!startBtn);
+                handleButtonClick("Short Break"), setStartBtn(false);
               }}
             >
               Short Break
@@ -102,7 +106,7 @@ function Clock() {
                 activeButton === "Long Break" && "btn-active"
               }`}
               onClick={() => {
-                handleButtonClick("Long Break"), setStartBtn(!startBtn);
+                handleButtonClick("Long Break"), setStartBtn(false);
               }}
             >
               Long Break
@@ -138,6 +142,18 @@ function Clock() {
             </button>
           )}
         </div>
+      </div>
+
+      <div className="counter-container mt-4">
+        <button>
+          <p>{counter}#</p>
+        </button>
+
+        {activeButton === "Short Break" || activeButton === "Long Break" ? (
+          <p className="text-lg">Time for a break!</p>
+        ) : (
+          <p className="text-lg">Time to focus!</p>
+        )}
       </div>
     </div>
   );

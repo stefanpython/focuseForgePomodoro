@@ -8,6 +8,18 @@ function Clock() {
   // Create an audio element with the sound file
   const startSound = new Audio("./click.mp3");
 
+  // Define the total session time based on the active button
+  const totalSessionTime =
+    activeButton === "Pomodoro"
+      ? 25 * 60 // 25 minutes for Pomodoro
+      : activeButton === "Short Break"
+      ? 5 * 60 // 5 minutes for Short Break
+      : 15 * 60; // 15 minutes for Long Break
+
+  // Calculate the progress value based on the remaining time and the total session time
+  const progressValue =
+    ((totalSessionTime - timeLeft) / totalSessionTime) * 100;
+
   useEffect(() => {
     let intervalId: any;
 
@@ -50,6 +62,12 @@ function Clock() {
 
   return (
     <div className="clock-container pl-2 pr-2">
+      <progress
+        className="progress progress-accent max-w-96 -mb-5"
+        value={progressValue}
+        max="100"
+      ></progress>
+
       <div className="m-auto bg-stone-200 bg-opacity-100 max-w-[450px] min-h-[320px] mt-10 rounded-xl p-2 flex flex-col items-center shadow-2xl">
         <div className="flex flex-wrap justify-center z-10">
           <div className="p-1">

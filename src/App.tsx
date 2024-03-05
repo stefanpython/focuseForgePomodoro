@@ -8,6 +8,7 @@ function App() {
   return (
     <div className="bg-base-200 h-screen">
       <Navbar />
+
       <Clock />
       {/* <Tasks /> */}
     </div>

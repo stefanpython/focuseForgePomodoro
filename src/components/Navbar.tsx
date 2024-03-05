@@ -1,7 +1,7 @@
 function Navbar() {
   return (
     <div className="navbar navbar-center bg-base-200 space-x-20 sm:space-x-44 md:space-x-96 shadow">
-      <div className="navbar-end p-1 pl-12">
+      <div className="navbar-end p-3 pl-12">
         <img
           className="w-10 h-10 animate-bounce"
           src="./logo.png"

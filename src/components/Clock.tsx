@@ -5,6 +5,9 @@ function Clock() {
   const [startBtn, setStartBtn] = useState(false);
   const [timeLeft, setTimeLeft] = useState(25 * 60);
 
+  // Create an audio element with the sound file
+  const startSound = new Audio("./click.mp3");
+
   useEffect(() => {
     let intervalId: any;
 
@@ -35,6 +38,7 @@ function Clock() {
   };
 
   const toggleStart = () => {
+    startSound.play();
     setStartBtn((prevStartBtn) => !prevStartBtn);
   };
 

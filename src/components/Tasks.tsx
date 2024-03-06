@@ -1,32 +1,64 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function Tasks() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="tasks-container mt-6">
       <div className="flex items-center ">
         <div className="mx-auto flex items-center space-x-60">
           <p>Tasks</p>
 
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end" ref={dropdownRef}>
             <div
               tabIndex={0}
               role="button"
               className="btn m-1"
               id="dropdownButton"
+              onClick={toggleDropdown}
             >
               <img className="w-7" src="./more1.png" alt="more icon" />
             </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Item 2</a>
-              </li>
-            </ul>
+            {isOpen && (
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                onClick={closeDropdown}
+              >
+                <li>
+                  <a>Item 1</a>
+                </li>
+                <li>
+                  <a>Item 2</a>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </div>

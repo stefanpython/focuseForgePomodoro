@@ -26,7 +26,7 @@ function Clock() {
   }, [counter]);
 
   // Create an audio element with the sound file
-  const startSound = new Audio("./click.mp3");
+  const startSound: HTMLAudioElement = new Audio("./click.mp3");
 
   // Define the total session time based on the active button
   const totalSessionTime =
@@ -84,7 +84,7 @@ function Clock() {
   };
 
   const handleResetRound = () => {
-    const confirmation = window.confirm(
+    const confirmation: boolean = window.confirm(
       "Are you sure you want to reset session?"
     );
     if (confirmation) {

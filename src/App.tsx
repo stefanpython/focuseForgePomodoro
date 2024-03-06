@@ -10,7 +10,8 @@ function App() {
       <Navbar />
 
       <Clock />
-      {/* <Tasks /> */}
+
+      <Tasks />
     </div>
   );
 }

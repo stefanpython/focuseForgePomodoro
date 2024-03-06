@@ -94,9 +94,9 @@ function Clock() {
   };
 
   return (
-    <div className="clock-container pl-2 pr-2">
+    <div className="clock-container pl-2 pr-2 -mt-4">
       <progress
-        className="progress progress-accent w-80 sm:w-96 -mb-5"
+        className="progress progress-accent w-80 sm:w-96 -mb-3"
         value={progressValue}
         max="100"
       ></progress>

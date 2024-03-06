@@ -81,6 +81,13 @@ function Tasks() {
       </div>
 
       <div className="divider max-w-96 m-auto"></div>
+
+      <div className="tast-container hidden">Tasks</div>
+
+      <button className="btn bg-sky-500 hover:bg-sky-400 w-full h-14 sm:max-w-[30em] sm:h-[4.5em] border-dashed border-2">
+        <img className="w-8" src="./plus1.png" alt="plus image" />
+        <p className="text-white text-lg">Add Task</p>
+      </button>
     </div>
   );
 }

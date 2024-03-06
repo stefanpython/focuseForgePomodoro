@@ -4,6 +4,8 @@ function Tasks() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Close dropdown when pressing button 2 times
+  // or when pressing on a list item
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -52,10 +54,25 @@ function Tasks() {
                 onClick={closeDropdown}
               >
                 <li>
-                  <a>Item 1</a>
+                  <a>
+                    <img
+                      className="w-4"
+                      src="./trashcan.png"
+                      alt="trashcan image"
+                    />
+                    Clear finished tasks
+                  </a>
                 </li>
+
                 <li>
-                  <a>Item 2</a>
+                  <a>
+                    <img
+                      className="w-4"
+                      src="./trashcan.png"
+                      alt="trashcan image"
+                    />
+                    Clear all tasks
+                  </a>
                 </li>
               </ul>
             )}

@@ -9,9 +9,8 @@ function Clock() {
 
   // Increment round by 1 after going through a pomodoro + short/long break
   useEffect(() => {
-    if (activeButton === "Pomodoro" && timeLeft === 1499) {
-      setCounter((prev) => prev + 1);
-    } else if (
+    if (
+      (activeButton === "Pomodoro" && timeLeft === 1499) ||
       (activeButton === "Short Break" && timeLeft === 299) ||
       (activeButton === "Long Break" && timeLeft === 899)
     ) {
@@ -26,7 +25,7 @@ function Clock() {
   }, [counter]);
 
   // Create an audio element with the sound file
-  const startSound: HTMLAudioElement = new Audio("./click.mp3");
+  const startSound: HTMLAudioElement = new Audio("./start.mp3");
 
   // Define the total session time based on the active button
   const totalSessionTime =

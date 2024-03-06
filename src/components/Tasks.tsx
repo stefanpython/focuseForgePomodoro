@@ -1,8 +1,39 @@
 import { useEffect, useState, useRef } from "react";
 
+interface FormData {
+  pomodoros: string;
+  task: string;
+  note: string;
+}
+
 function Tasks() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const [formData, setFormData] = useState<FormData>({
+    pomodoros: "1",
+    task: "",
+    note: "",
+  });
+  const [showNoteInput, setShowNoteInput] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleAddNote = () => {
+    setFormData({ ...formData, note: "" });
+    setShowNoteInput(true);
+  };
+
+  const handleCancel = () => {
+    setFormData({ pomodoros: "1", task: "", note: "" });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
   // Close dropdown when pressing button 2 times
   // or when pressing on a list item
@@ -82,7 +113,77 @@ function Tasks() {
 
       <div className="divider max-w-96 m-auto"></div>
 
-      <div className="tast-container hidden">Tasks</div>
+      <div className="tast-container">
+        <form
+          onSubmit={handleSubmit}
+          className="card w-96 bg-base-100 shadow-xl m-auto"
+        >
+          <div className="card-body">
+            <h2 className="card-title">
+              {formData.task || (
+                <input
+                  type="text"
+                  name="task"
+                  onChange={handleChange}
+                  className="input input-bordered mr-2 w-full"
+                  placeholder="What are you working on?"
+                />
+              )}
+            </h2>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Est. Pomodoros</span>
+              </label>
+              <input
+                type="number"
+                name="pomodoros"
+                value={formData.pomodoros}
+                onChange={handleChange}
+                className="input input-bordered w-20"
+              />
+            </div>
+
+            {showNoteInput && (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Note</span>
+                </label>
+                <input
+                  type="text"
+                  name="note"
+                  value={formData.note}
+                  onChange={handleChange}
+                  className="input input-bordered"
+                />
+              </div>
+            )}
+
+            {!showNoteInput && (
+              <div className="form-control mt-2">
+                <button type="button" onClick={handleAddNote}>
+                  <p className="flex text-md underline">&#x2b; Add Note</p>
+                </button>
+              </div>
+            )}
+
+            <div className="mt-6 flex justify-end">
+              <button type="button" onClick={handleCancel} className="">
+                <p className="font-medium text-gray-400 hover:bg-slate-100 rounded-md ml-2 h-8 w-24 flex items-center justify-center">
+                  Cancel
+                </p>
+              </button>
+
+              <button
+                type="submit"
+                className="bg-slate-700 rounded-md ml-2 h-8 w-24"
+              >
+                <p className="text-white font-medium">Save</p>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
 
       <button className="btn bg-sky-500 hover:bg-sky-400 w-full h-14 sm:max-w-[30em] sm:h-[4.5em] border-dashed border-2">
         <img className="w-8" src="./plus1.png" alt="plus image" />

@@ -7,15 +7,16 @@ interface FormData {
 }
 
 function Tasks() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [showNoteInput, setShowNoteInput] = useState<boolean>(false);
+  const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<FormData>({
     pomodoros: "1",
     task: "",
     note: "",
   });
-  const [showNoteInput, setShowNoteInput] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,6 +61,11 @@ function Tasks() {
 
   const closeDropdown = () => {
     setIsOpen(false);
+  };
+
+  // Handle show task form
+  const handleShowTaskForm = () => {
+    setShowTaskForm(!showTaskForm);
   };
 
   return (
@@ -113,14 +119,14 @@ function Tasks() {
 
       <div className="divider max-w-96 m-auto"></div>
 
-      <div className="tast-container">
-        <form
-          onSubmit={handleSubmit}
-          className="card w-96 bg-base-100 shadow-xl m-auto"
-        >
-          <div className="card-body">
-            <h2 className="card-title">
-              {formData.task || (
+      {showTaskForm && (
+        <div className="tast-container">
+          <form
+            onSubmit={handleSubmit}
+            className="card w-96 bg-base-100 shadow-xl m-auto"
+          >
+            <div className="card-body">
+              <h2 className="card-title">
                 <input
                   type="text"
                   name="task"
@@ -128,67 +134,72 @@ function Tasks() {
                   className="input input-bordered mr-2 w-full"
                   placeholder="What are you working on?"
                 />
-              )}
-            </h2>
+              </h2>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Est. Pomodoros</span>
-              </label>
-              <input
-                type="number"
-                name="pomodoros"
-                value={formData.pomodoros}
-                onChange={handleChange}
-                className="input input-bordered w-20"
-              />
-            </div>
-
-            {showNoteInput && (
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Note</span>
+                  <span className="label-text">Est. Pomodoros</span>
                 </label>
                 <input
-                  type="text"
-                  name="note"
-                  value={formData.note}
+                  type="number"
+                  name="pomodoros"
+                  value={formData.pomodoros}
                   onChange={handleChange}
-                  className="input input-bordered"
+                  className="input input-bordered w-20"
                 />
               </div>
-            )}
 
-            {!showNoteInput && (
-              <div className="form-control mt-2">
-                <button type="button" onClick={handleAddNote}>
-                  <p className="flex text-md underline">&#x2b; Add Note</p>
+              {showNoteInput && (
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Note</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="note"
+                    value={formData.note}
+                    onChange={handleChange}
+                    className="input input-bordered"
+                  />
+                </div>
+              )}
+
+              {!showNoteInput && (
+                <div className="form-control mt-2">
+                  <button type="button" onClick={handleAddNote}>
+                    <p className="flex text-md underline">&#x2b; Add Note</p>
+                  </button>
+                </div>
+              )}
+
+              <div className="mt-6 flex justify-end">
+                <button type="button" onClick={handleCancel} className="">
+                  <p className="font-medium text-gray-400 hover:bg-slate-100 rounded-md ml-2 h-8 w-24 flex items-center justify-center">
+                    Cancel
+                  </p>
+                </button>
+
+                <button
+                  type="submit"
+                  className="bg-slate-700 rounded-md ml-2 h-8 w-24"
+                >
+                  <p className="text-white font-medium">Save</p>
                 </button>
               </div>
-            )}
-
-            <div className="mt-6 flex justify-end">
-              <button type="button" onClick={handleCancel} className="">
-                <p className="font-medium text-gray-400 hover:bg-slate-100 rounded-md ml-2 h-8 w-24 flex items-center justify-center">
-                  Cancel
-                </p>
-              </button>
-
-              <button
-                type="submit"
-                className="bg-slate-700 rounded-md ml-2 h-8 w-24"
-              >
-                <p className="text-white font-medium">Save</p>
-              </button>
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
 
-      <button className="btn bg-sky-500 hover:bg-sky-400 w-full h-14 sm:max-w-[30em] sm:h-[4.5em] border-dashed border-2">
-        <img className="w-8" src="./plus1.png" alt="plus image" />
-        <p className="text-white text-lg">Add Task</p>
-      </button>
+      {!showTaskForm && (
+        <button
+          className="btn bg-sky-500 hover:bg-sky-400 w-full h-14 sm:max-w-[30em] sm:h-[4.5em] border-dashed border-2"
+          onClick={handleShowTaskForm}
+        >
+          <img className="w-8" src="./plus1.png" alt="plus image" />
+          <p className="text-white text-lg">Add Task</p>
+        </button>
+      )}
     </div>
   );
 }

@@ -27,10 +27,6 @@ function Tasks() {
     setShowNoteInput(true);
   };
 
-  const handleCancel = () => {
-    setFormData({ pomodoros: "1", task: "", note: "" });
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
@@ -173,7 +169,7 @@ function Tasks() {
               )}
 
               <div className="mt-6 flex justify-end">
-                <button type="button" onClick={handleCancel} className="">
+                <button type="button" onClick={handleShowTaskForm} className="">
                   <p className="font-medium text-gray-400 hover:bg-slate-100 rounded-md ml-2 h-8 w-24 flex items-center justify-center">
                     Cancel
                   </p>

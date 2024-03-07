@@ -11,6 +11,7 @@ function Tasks() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showNoteInput, setShowNoteInput] = useState<boolean>(false);
   const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<FormData>({
     pomodoros: "1",
@@ -112,11 +113,46 @@ function Tasks() {
           </div>
         </div>
       </div>
-
       <div className="divider max-w-96 m-auto"></div>
 
+      <div className="task flex flex-wrap justify-center pb-4">
+        <div className="flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8">
+          <div className="left ml-2">
+            {checked ? (
+              <img
+                className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                src="./check2.png"
+                alt="checked image"
+                onClick={() => setChecked(!checked)}
+              />
+            ) : (
+              <img
+                className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                src="./check.png"
+                alt="checked image"
+                onClick={() => setChecked(!checked)}
+              />
+            )}
+          </div>
+
+          <div className="center flex p-3 pl-2 pr-3">
+            <h5 className="break-words max-w-[290px] text-left">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </h5>
+          </div>
+
+          <div className="right flex items-center">
+            <span className="font-semibold text-gray-400">0/1</span>
+
+            <button className="right border-1 hover:bg-stone-300 p-1 rounded-sm ml-1">
+              <img className="w-6" src="./more1.png" alt="more icon" />
+            </button>
+          </div>
+        </div>
+      </div>
+
       {showTaskForm && (
-        <div className="tast-container">
+        <div className="task-form-container">
           <form
             onSubmit={handleSubmit}
             className="card w-96 bg-base-100 shadow-xl m-auto"
@@ -186,7 +222,6 @@ function Tasks() {
           </form>
         </div>
       )}
-
       {!showTaskForm && (
         <button
           className="btn bg-sky-500 hover:bg-sky-400 w-full h-14 sm:max-w-[30em] sm:h-[4.5em] border-dashed border-2"

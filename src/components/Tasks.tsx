@@ -135,9 +135,9 @@ function Tasks() {
             )}
           </div>
 
-          <div className="center flex p-3 pl-2 pr-3">
-            <h5 className="break-words max-w-[290px] text-left">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <div className="center flex p-3 pl-2 pr-2">
+            <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
             </h5>
           </div>
 

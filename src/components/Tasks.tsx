@@ -4,6 +4,7 @@ interface FormData {
   pomodoros: string;
   task: string;
   note: string;
+  finished: boolean | null;
 }
 
 function Tasks() {
@@ -17,6 +18,7 @@ function Tasks() {
     pomodoros: "1",
     task: "",
     note: "",
+    finished: null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +32,13 @@ function Tasks() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Convert formData to a string
+    const formDataString = JSON.stringify(formData);
+
+    // Save string to localStorage
+    localStorage.setItem("formData", formDataString);
+
     console.log(formData);
   };
 

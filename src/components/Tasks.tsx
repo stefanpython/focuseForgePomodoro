@@ -33,13 +33,19 @@ function Tasks() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Convert formData to a string
-    const formDataString = JSON.stringify(formData);
+    // Retrieve existing tasks from local storage or initialize an empty array
+    const existingTasksString = localStorage.getItem("tasks");
+    const existingTasks: FormData[] = existingTasksString
+      ? JSON.parse(existingTasksString)
+      : [];
 
-    // Save string to localStorage
-    localStorage.setItem("formData", formDataString);
+    // Append the new task to the existing tasks array
+    const updatedTasks = [...existingTasks, formData];
 
-    console.log(formData);
+    // Save the updated tasks array back to local storage
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+
+    console.log(updatedTasks);
   };
 
   // Close dropdown when pressing button 2 times

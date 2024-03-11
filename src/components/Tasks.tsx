@@ -5,6 +5,7 @@ interface FormData {
   task: string;
   note: string;
   finished: boolean | null;
+  checked: boolean;
 }
 
 function Tasks() {
@@ -14,12 +15,12 @@ function Tasks() {
   const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
   const [tasks, setTasks] = useState<FormData[]>([]);
-
   const [formData, setFormData] = useState<FormData>({
     pomodoros: "1",
     task: "",
     note: "",
     finished: null,
+    checked: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +42,7 @@ function Tasks() {
       : [];
 
     // Append the new task to the existing tasks array
-    const updatedTasks = [...existingTasks, formData];
+    const updatedTasks = [...existingTasks, { ...formData, checked: false }];
 
     // Save the updated tasks array back to local storage
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
@@ -88,6 +89,20 @@ function Tasks() {
   // Handle show task form
   const handleShowTaskForm = () => {
     setShowTaskForm(!showTaskForm);
+  };
+
+  // Handle check button for tasks based on index
+  const handleToggleChecked = (index: number) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task, i) =>
+        i === index ? { ...task, checked: !task.checked } : task
+      )
+    );
+
+    // Update localStorage
+    const updatedTasks = [...tasks];
+    updatedTasks[index].checked = !updatedTasks[index].checked;
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   return (
@@ -144,19 +159,19 @@ function Tasks() {
         <div key={index} className="task flex flex-wrap justify-center pb-4">
           <div className="flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8">
             <div className="left ml-2">
-              {checked ? (
+              {task.checked ? (
                 <img
                   className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
                   src="./check2.png"
                   alt="checked image"
-                  onClick={() => setChecked(!checked)}
+                  onClick={() => handleToggleChecked(index)}
                 />
               ) : (
                 <img
                   className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
                   src="./check.png"
                   alt="checked image"
-                  onClick={() => setChecked(!checked)}
+                  onClick={() => handleToggleChecked(index)}
                 />
               )}
             </div>

@@ -25,7 +25,7 @@ function Clock() {
   }, [counter]);
 
   // Create an audio element with the sound file
-  const startSound: HTMLAudioElement = new Audio("./start.mp3");
+  const startSound: HTMLAudioElement = new Audio("./click.mp3");
 
   // Define the total session time based on the active button
   const totalSessionTime =

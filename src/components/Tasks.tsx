@@ -205,10 +205,14 @@ function Tasks() {
                     )}
                   </div>
 
-                  <div className="center flex p-3 pl-2 pr-2">
-                    <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600">
+                  <div className="center flex flex-col p-3 pl-2 pr-2">
+                    <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600 text-xl">
                       {task.task}
                     </h5>
+
+                    <div className="bg-yellow-100 p-1 rounded-sm w-[300px]">
+                      <p className="text-sm text-left">{task.note}</p>
+                    </div>
                   </div>
 
                   <div className="right flex items-center flex-grow justify-end">

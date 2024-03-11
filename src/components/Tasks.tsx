@@ -23,6 +23,12 @@ function Tasks() {
     null
   ); // Track which task's "more" button is clicked
 
+  const handleFormRef = (formElement: any) => {
+    if (showTaskForm && formElement) {
+      formElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -223,8 +229,8 @@ function Tasks() {
           })}
       </div>
 
-      {showTaskForm && (
-        <div className="task-form-container">
+      <div className="task-form-container" ref={handleFormRef}>
+        {showTaskForm && (
           <form
             onSubmit={handleSubmit}
             className="card w-96 bg-base-100 shadow-xl m-auto"
@@ -238,6 +244,8 @@ function Tasks() {
                   value={formData.task}
                   className="input input-bordered mr-2 w-full"
                   placeholder="What are you working on?"
+                  autoFocus
+                  required
                 />
               </h2>
 
@@ -297,8 +305,9 @@ function Tasks() {
               </div>
             </div>
           </form>
-        </div>
-      )}
+        )}
+      </div>
+
       {!showTaskForm && (
         <button
           className="btn bg-sky-500 hover:bg-sky-400 w-full h-14 sm:max-w-[30em] sm:h-[4.5em] border-dashed border-2"

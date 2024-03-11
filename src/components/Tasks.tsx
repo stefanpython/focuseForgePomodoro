@@ -13,6 +13,7 @@ function Tasks() {
   const [showNoteInput, setShowNoteInput] = useState<boolean>(false);
   const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
+  const [tasks, setTasks] = useState<FormData[]>([]);
 
   const [formData, setFormData] = useState<FormData>({
     pomodoros: "1",
@@ -45,8 +46,17 @@ function Tasks() {
     // Save the updated tasks array back to local storage
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
-    console.log(updatedTasks);
+    // Update state with the updated tasks
+    setTasks(updatedTasks);
   };
+
+  useEffect(() => {
+    // Retrieve tasks from local storage on component mount
+    const existingTasksString = localStorage.getItem("tasks");
+    if (existingTasksString) {
+      setTasks(JSON.parse(existingTasksString));
+    }
+  }, []);
 
   // Close dropdown when pressing button 2 times
   // or when pressing on a list item
@@ -130,41 +140,45 @@ function Tasks() {
       </div>
       <div className="divider max-w-96 m-auto"></div>
 
-      <div className="task flex flex-wrap justify-center pb-4">
-        <div className="flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8">
-          <div className="left ml-2">
-            {checked ? (
-              <img
-                className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
-                src="./check2.png"
-                alt="checked image"
-                onClick={() => setChecked(!checked)}
-              />
-            ) : (
-              <img
-                className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
-                src="./check.png"
-                alt="checked image"
-                onClick={() => setChecked(!checked)}
-              />
-            )}
-          </div>
+      {tasks.map((task, index) => (
+        <div key={index} className="task flex flex-wrap justify-center pb-4">
+          <div className="flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8">
+            <div className="left ml-2">
+              {checked ? (
+                <img
+                  className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                  src="./check2.png"
+                  alt="checked image"
+                  onClick={() => setChecked(!checked)}
+                />
+              ) : (
+                <img
+                  className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                  src="./check.png"
+                  alt="checked image"
+                  onClick={() => setChecked(!checked)}
+                />
+              )}
+            </div>
 
-          <div className="center flex p-3 pl-2 pr-2">
-            <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            </h5>
-          </div>
+            <div className="center flex p-3 pl-2 pr-2">
+              <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600">
+                {task.task}
+              </h5>
+            </div>
 
-          <div className="right flex items-center">
-            <span className="font-semibold text-gray-400">0/1</span>
+            <div className="right flex items-center">
+              <span className="font-semibold text-gray-400">
+                0/{task.pomodoros}
+              </span>
 
-            <button className="right border-1 hover:bg-stone-300 p-1 rounded-sm ml-1">
-              <img className="w-6" src="./more1.png" alt="more icon" />
-            </button>
+              <button className="right border-1 hover:bg-stone-300 p-1 rounded-sm ml-1">
+                <img className="w-6" src="./more1.png" alt="more icon" />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      ))}
 
       {showTaskForm && (
         <div className="task-form-container">

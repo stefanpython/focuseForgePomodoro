@@ -4,7 +4,6 @@ interface FormData {
   pomodoros: string;
   task: string;
   note: string;
-  finished: boolean | null;
   checked: boolean;
 }
 
@@ -13,15 +12,16 @@ function Tasks() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showNoteInput, setShowNoteInput] = useState<boolean>(false);
   const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
-  const [checked, setChecked] = useState<boolean>(false);
   const [tasks, setTasks] = useState<FormData[]>([]);
   const [formData, setFormData] = useState<FormData>({
     pomodoros: "1",
     task: "",
     note: "",
-    finished: null,
     checked: false,
   });
+  const [selectedTaskIndex, setSelectedTaskIndex] = useState<number | null>(
+    null
+  ); // Track which task's "more" button is clicked
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,32 +35,34 @@ function Tasks() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Retrieve existing tasks from local storage or initialize an empty array
     const existingTasksString = localStorage.getItem("tasks");
     const existingTasks: FormData[] = existingTasksString
       ? JSON.parse(existingTasksString)
       : [];
 
-    // Append the new task to the existing tasks array
-    const updatedTasks = [...existingTasks, { ...formData, checked: false }];
+    let updatedTasks: FormData[];
 
-    // Save the updated tasks array back to local storage
+    if (selectedTaskIndex !== null) {
+      // If editing an existing task, update the corresponding task
+      updatedTasks = [...existingTasks];
+      updatedTasks[selectedTaskIndex] = { ...formData };
+    } else {
+      // If adding a new task, append it to the existing tasks array
+      updatedTasks = [...existingTasks, { ...formData, checked: false }];
+    }
+
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-
-    // Update state with the updated tasks
     setTasks(updatedTasks);
+    setShowTaskForm(false); // Close the task form after saving
   };
 
   useEffect(() => {
-    // Retrieve tasks from local storage on component mount
     const existingTasksString = localStorage.getItem("tasks");
     if (existingTasksString) {
       setTasks(JSON.parse(existingTasksString));
     }
   }, []);
 
-  // Close dropdown when pressing button 2 times
-  // or when pressing on a list item
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -86,12 +88,25 @@ function Tasks() {
     setIsOpen(false);
   };
 
-  // Handle show task form
-  const handleShowTaskForm = () => {
-    setShowTaskForm(!showTaskForm);
+  const handleShowTaskForm = (index: number) => {
+    setShowTaskForm(true);
+    setSelectedTaskIndex(index); // Set the index of the selected task
+    setFormData({ ...tasks[index] }); // Pre-populate form data with the selected task
   };
 
-  // Handle check button for tasks based on index
+  // Handle opening
+  const handleAddTaskForm = () => {
+    setShowTaskForm(true);
+    setSelectedTaskIndex(null); // Reset the selected task index
+    setFormData({
+      // Reset form data to default values
+      pomodoros: "1",
+      task: "",
+      note: "",
+      checked: false,
+    });
+  };
+
   const handleToggleChecked = (index: number) => {
     setTasks((prevTasks) =>
       prevTasks.map((task, i) =>
@@ -99,7 +114,6 @@ function Tasks() {
       )
     );
 
-    // Update localStorage
     const updatedTasks = [...tasks];
     updatedTasks[index].checked = !updatedTasks[index].checked;
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
@@ -107,7 +121,7 @@ function Tasks() {
 
   return (
     <div className="tasks-container mt-6">
-      <div className="flex items-center ">
+      <div className="flex items-center">
         <div className="mx-auto flex items-center space-x-60">
           <p>Tasks</p>
 
@@ -155,45 +169,59 @@ function Tasks() {
       </div>
       <div className="divider max-w-96 m-auto"></div>
 
-      {tasks.map((task, index) => (
-        <div key={index} className="task flex flex-wrap justify-center pb-4">
-          <div className="flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8">
-            <div className="left ml-2">
-              {task.checked ? (
-                <img
-                  className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
-                  src="./check2.png"
-                  alt="checked image"
-                  onClick={() => handleToggleChecked(index)}
-                />
-              ) : (
-                <img
-                  className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
-                  src="./check.png"
-                  alt="checked image"
-                  onClick={() => handleToggleChecked(index)}
-                />
-              )}
-            </div>
+      <div className="tasks-container mt-6">
+        {tasks
+          .slice()
+          .reverse()
+          .map((task, index) => {
+            const originalIndex = tasks.length - 1 - index;
+            return (
+              <div
+                key={index}
+                className="task flex flex-wrap justify-center pb-4"
+              >
+                <div className="flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8">
+                  <div className="left ml-2">
+                    {task.checked ? (
+                      <img
+                        className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                        src="./check2.png"
+                        alt="checked image"
+                        onClick={() => handleToggleChecked(originalIndex)}
+                      />
+                    ) : (
+                      <img
+                        className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                        src="./check.png"
+                        alt="checked image"
+                        onClick={() => handleToggleChecked(originalIndex)}
+                      />
+                    )}
+                  </div>
 
-            <div className="center flex p-3 pl-2 pr-2">
-              <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600">
-                {task.task}
-              </h5>
-            </div>
+                  <div className="center flex p-3 pl-2 pr-2">
+                    <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600">
+                      {task.task}
+                    </h5>
+                  </div>
 
-            <div className="right flex items-center flex-grow justify-end">
-              <span className="font-semibold text-gray-400">
-                0/{task.pomodoros}
-              </span>
+                  <div className="right flex items-center flex-grow justify-end">
+                    <span className="font-semibold text-gray-400">
+                      0/{task.pomodoros}
+                    </span>
 
-              <button className="right border-1 hover:bg-stone-300 p-1 rounded-sm ml-1">
-                <img className="w-6" src="./more1.png" alt="more icon" />
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
+                    <button
+                      className="right border-1 hover:bg-stone-300 p-1 rounded-sm ml-1"
+                      onClick={() => handleShowTaskForm(originalIndex)}
+                    >
+                      <img className="w-6" src="./more1.png" alt="more icon" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
 
       {showTaskForm && (
         <div className="task-form-container">
@@ -207,6 +235,7 @@ function Tasks() {
                   type="text"
                   name="task"
                   onChange={handleChange}
+                  value={formData.task}
                   className="input input-bordered mr-2 w-full"
                   placeholder="What are you working on?"
                 />
@@ -249,7 +278,11 @@ function Tasks() {
               )}
 
               <div className="mt-6 flex justify-end">
-                <button type="button" onClick={handleShowTaskForm} className="">
+                <button
+                  type="button"
+                  onClick={() => setShowTaskForm(false)}
+                  className=""
+                >
                   <p className="font-medium text-gray-400 hover:bg-slate-100 rounded-md ml-2 h-8 w-24 flex items-center justify-center">
                     Cancel
                   </p>
@@ -269,7 +302,7 @@ function Tasks() {
       {!showTaskForm && (
         <button
           className="btn bg-sky-500 hover:bg-sky-400 w-full h-14 sm:max-w-[30em] sm:h-[4.5em] border-dashed border-2"
-          onClick={handleShowTaskForm}
+          onClick={handleAddTaskForm}
         >
           <img className="w-8" src="./plus1.png" alt="plus image" />
           <p className="text-white text-lg">Add Task</p>

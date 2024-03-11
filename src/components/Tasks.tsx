@@ -167,7 +167,7 @@ function Tasks() {
               </h5>
             </div>
 
-            <div className="right flex items-center">
+            <div className="right flex items-center flex-grow justify-end">
               <span className="font-semibold text-gray-400">
                 0/{task.pomodoros}
               </span>

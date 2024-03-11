@@ -62,6 +62,7 @@ function Tasks() {
     setShowTaskForm(false); // Close the task form after saving
   };
 
+  // Retrieve tasks from localStorage on mount
   useEffect(() => {
     const existingTasksString = localStorage.getItem("tasks");
     if (existingTasksString) {
@@ -69,6 +70,7 @@ function Tasks() {
     }
   }, []);
 
+  // Close dropdown if clicked ouside it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -94,13 +96,14 @@ function Tasks() {
     setIsOpen(false);
   };
 
+  // Handle show taks form when pressing edit button on task
   const handleShowTaskForm = (index: number) => {
     setShowTaskForm(true);
     setSelectedTaskIndex(index); // Set the index of the selected task
     setFormData({ ...tasks[index] }); // Pre-populate form data with the selected task
   };
 
-  // Handle opening
+  // Handle opening add task form
   const handleAddTaskForm = () => {
     setShowTaskForm(true);
     setSelectedTaskIndex(null); // Reset the selected task index
@@ -113,6 +116,7 @@ function Tasks() {
     });
   };
 
+  // Handle checked/unchecked button on tasks
   const handleToggleChecked = (index: number) => {
     setTasks((prevTasks) =>
       prevTasks.map((task, i) =>
@@ -123,6 +127,13 @@ function Tasks() {
     const updatedTasks = [...tasks];
     updatedTasks[index].checked = !updatedTasks[index].checked;
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
+  const handleDeleteTask = (index: number) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    setShowTaskForm(false);
   };
 
   return (
@@ -290,6 +301,16 @@ function Tasks() {
               )}
 
               <div className="mt-6 flex justify-end">
+                {selectedTaskIndex !== null && ( // Only show delete button if editing an existing task
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteTask(selectedTaskIndex)}
+                    className="bg-red-500 rounded-md mr-10 h-8 w-24"
+                  >
+                    <p className="text-white font-medium">Delete</p>
+                  </button>
+                )}
+
                 <button
                   type="button"
                   onClick={() => setShowTaskForm(false)}

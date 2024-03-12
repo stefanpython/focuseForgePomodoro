@@ -150,6 +150,20 @@ function Tasks() {
     }
   };
 
+  // Handle clear all tasks button
+  const handleClearCheckedTasks = () => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete finished tasks?"
+    );
+    if (confirmation) {
+      const checkedTasks = tasks.filter((item) => item.checked !== true);
+      setTasks(checkedTasks);
+      localStorage.setItem("tasks", JSON.stringify(checkedTasks));
+    } else {
+      return;
+    }
+  };
+
   return (
     <div className="tasks-container mt-6">
       <div className="flex items-center">
@@ -173,7 +187,7 @@ function Tasks() {
                 onClick={closeDropdown}
               >
                 <li>
-                  <a>
+                  <a onClick={handleClearCheckedTasks}>
                     <img
                       className="w-4"
                       src="./trashcan.png"

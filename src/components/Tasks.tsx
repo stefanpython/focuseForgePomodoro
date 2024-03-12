@@ -197,7 +197,13 @@ function Tasks() {
                 key={index}
                 className="task flex flex-wrap justify-center pb-4"
               >
-                <div className="flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8">
+                <div
+                  className={
+                    !task.checked
+                      ? `flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-emerald-500 border-l-8`
+                      : `flex items-center border-2 shadow-lg min-h-14 w-full max-w-[420px] rounded-md border-l-slate-400 border-l-8`
+                  }
+                >
                   <div className="left ml-2">
                     {task.checked ? (
                       <img

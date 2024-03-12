@@ -5,7 +5,7 @@ import Tasks from "./components/Tasks";
 import { useEffect, useState } from "react";
 
 function App() {
-  // DaisyUI modal
+  // Handle opening settings modal
   const openModal = () => {
     const modal = document.getElementById("settings");
     if (modal instanceof HTMLDialogElement) {
@@ -13,6 +13,18 @@ function App() {
     } else {
       console.error("Element with ID 'settings' is not a modal");
     }
+  };
+
+  // Handle closing settings modal by pressing X
+  const handleCloseModal = () => {
+    const modal = document.getElementById("settings");
+    if (modal) {
+      (modal as HTMLDialogElement).close();
+    }
+  };
+
+  const handleModalSubmit = () => {
+    console.log("form submite");
   };
 
   return (
@@ -38,14 +50,23 @@ function App() {
 
           <dialog id="settings" className="modal">
             <div className="modal-box">
+              <button
+                type="button"
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={handleCloseModal}
+              >
+                X
+              </button>
               <h3 className="font-bold text-lg">Hello!</h3>
               <p className="py-4">
                 Press ESC key or click the button below to close
               </p>
               <div className="modal-action">
-                <form method="dialog">
+                <form onSubmit={handleModalSubmit} method="dialog">
                   {/* if there is a button in form, it will close the modal */}
-                  <button className="btn">Close</button>
+                  <button type="submit" className="btn">
+                    Ok
+                  </button>
                 </form>
               </div>
             </div>

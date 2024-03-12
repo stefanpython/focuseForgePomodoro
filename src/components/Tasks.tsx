@@ -129,11 +129,25 @@ function Tasks() {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
+  // Handle delete button in edit form
   const handleDeleteTask = (index: number) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     setShowTaskForm(false);
+  };
+
+  // Handle clear all tasks button
+  const handleClearAllTasks = () => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete all tasks?"
+    );
+    if (confirmation) {
+      setTasks([]);
+      localStorage.removeItem("tasks");
+    } else {
+      return;
+    }
   };
 
   return (
@@ -170,7 +184,7 @@ function Tasks() {
                 </li>
 
                 <li>
-                  <a>
+                  <a onClick={handleClearAllTasks}>
                     <img
                       className="w-4"
                       src="./trashcan.png"

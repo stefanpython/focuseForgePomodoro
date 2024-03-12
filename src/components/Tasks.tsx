@@ -221,7 +221,13 @@ function Tasks() {
                       {task.task}
                     </h5>
 
-                    <div className="bg-yellow-100 p-1 rounded-sm w-[300px]">
+                    <div
+                      className={
+                        task.note
+                          ? `bg-yellow-100 p-1 rounded-sm w-[300px]`
+                          : ""
+                      }
+                    >
                       <p className="text-sm text-left">{task.note}</p>
                     </div>
                   </div>

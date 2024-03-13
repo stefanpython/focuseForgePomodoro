@@ -64,10 +64,10 @@ function App() {
                 <form
                   onSubmit={handleModalSubmit}
                   method="dialog"
-                  className="flex flex-wrap"
+                  className="flex flex-col justify-start"
                 >
                   {/* Move timer-container to the left */}
-                  <div className="timer-container flex flex-col w-full md:w-auto md:flex-initial md:mr-24">
+                  <div className="timer-container flex flex-col w-full md:w-auto md:flex-initial md:mr-40">
                     <div className="timer flex flex-col items-start">
                       <span className="flex">
                         <img
@@ -88,7 +88,7 @@ function App() {
                         <input
                           type="number"
                           name="pomodoro"
-                          className="input input-bordered w-20 h-10 bg-slate-100"
+                          className="input input-bordered w-16 sm:w-20 h-10 bg-slate-100"
                         />
                       </div>
 
@@ -100,7 +100,7 @@ function App() {
                         <input
                           type="number"
                           name="short"
-                          className="input input-bordered w-20 h-10 bg-slate-100"
+                          className="input input-bordered w-16 sm:w-20 h-10 bg-slate-100"
                         />
                       </div>
 
@@ -112,13 +112,42 @@ function App() {
                         <input
                           type="number"
                           name="long"
-                          className="input input-bordered w-20 h-10 bg-slate-100"
+                          className="input input-bordered w-16 sm:w-20 h-10 bg-slate-100"
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="sound-container"></div>
+                  <div className="divider divider-neutral"></div>
+
+                  <div className="sound-container">
+                    <div className="sound flex flex-col items-start">
+                      <span className="flex items-center">
+                        <img
+                          className="w-5 h-5 mr-1"
+                          src="./volume.png"
+                          alt="volume image"
+                        />
+                        VOLUME
+                      </span>
+                    </div>
+
+                    <br />
+
+                    <div className="alarm-container flex justify-between">
+                      <label htmlFor="alarm">Alarm sound</label>
+                      <select className="select select-bordered w-44 max-w-xs">
+                        <option disabled selected>
+                          Select alarm
+                        </option>
+                        <option>Bird</option>
+                        <option>Digital</option>
+                        <option>Kitchen</option>
+                        <option>Modern</option>
+                        <option>Owl</option>
+                      </select>
+                    </div>
+                  </div>
 
                   <div className="flex justify-end">
                     <button type="submit" className="btn">

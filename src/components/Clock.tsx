@@ -16,6 +16,10 @@ function Clock() {
     ) {
       setCounter((prev) => prev + 1);
     }
+
+    if (timeLeft === 0) {
+      endSound.play();
+    }
   }, [timeLeft]);
 
   useEffect(() => {
@@ -24,8 +28,11 @@ function Clock() {
     }
   }, [counter]);
 
-  // Create an audio element with the sound file
-  const startSound: HTMLAudioElement = new Audio("./click.mp3");
+  // Create an audio element with the start sound file
+  const startSound: HTMLAudioElement = new Audio("./hotel.mp3");
+
+  // Create an audio element with the finish alarm file
+  const endSound: HTMLAudioElement = new Audio("./alarms/bird.mp3");
 
   // Define the total session time based on the active button
   const totalSessionTime =

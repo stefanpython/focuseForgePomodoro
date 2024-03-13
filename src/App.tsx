@@ -57,16 +57,74 @@ function App() {
               >
                 X
               </button>
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">
-                Press ESC key or click the button below to close
-              </p>
+
+              <div className="divider divider-warning">Settings</div>
+
               <div className="modal-action">
-                <form onSubmit={handleModalSubmit} method="dialog">
-                  {/* if there is a button in form, it will close the modal */}
-                  <button type="submit" className="btn">
-                    Ok
-                  </button>
+                <form
+                  onSubmit={handleModalSubmit}
+                  method="dialog"
+                  className="flex flex-wrap"
+                >
+                  {/* Move timer-container to the left */}
+                  <div className="timer-container flex flex-col w-full md:w-auto md:flex-initial md:mr-24">
+                    <div className="timer flex flex-col items-start">
+                      <span className="flex">
+                        <img
+                          className="w-6 mr-1"
+                          src="./stopwatch.png"
+                          alt="stopwatch image"
+                        />
+                        TIMER (minutes)
+                      </span>
+                    </div>
+
+                    <div className="timer-inputs flex">
+                      <div className="form-control p-2">
+                        <label className="label">
+                          <span className="label-text">Pomodoro</span>
+                        </label>
+
+                        <input
+                          type="number"
+                          name="pomodoro"
+                          className="input input-bordered w-20 h-10 bg-slate-100"
+                        />
+                      </div>
+
+                      <div className="form-control p-2">
+                        <label className="label">
+                          <span className="label-text">Short Break</span>
+                        </label>
+
+                        <input
+                          type="number"
+                          name="short"
+                          className="input input-bordered w-20 h-10 bg-slate-100"
+                        />
+                      </div>
+
+                      <div className="form-control p-2">
+                        <label className="label">
+                          <span className="label-text">Long Break</span>
+                        </label>
+
+                        <input
+                          type="number"
+                          name="long"
+                          className="input input-bordered w-20 h-10 bg-slate-100"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="sound-container"></div>
+
+                  <div className="flex justify-end">
+                    <button type="submit" className="btn">
+                      Ok
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>

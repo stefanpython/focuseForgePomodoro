@@ -58,7 +58,9 @@ function App() {
                 X
               </button>
 
-              <div className="divider divider-warning">Settings</div>
+              <div className="divider divider-warning text-gray-400 text-lg font-medium">
+                Settings
+              </div>
 
               <div className="modal-action">
                 <form
@@ -118,7 +120,7 @@ function App() {
                     </div>
                   </div>
 
-                  <div className="divider divider-neutral"></div>
+                  <div className="divider"></div>
 
                   <div className="sound-container">
                     <div className="sound flex flex-col items-start">
@@ -128,7 +130,7 @@ function App() {
                           src="./volume.png"
                           alt="volume image"
                         />
-                        VOLUME
+                        SOUND
                       </span>
                     </div>
 
@@ -136,10 +138,11 @@ function App() {
 
                     <div className="alarm-container flex justify-between">
                       <label htmlFor="alarm">Alarm sound</label>
-                      <select className="select select-bordered w-44 max-w-xs">
-                        <option disabled selected>
-                          Select alarm
-                        </option>
+                      <select
+                        className="select select-bordered w-44 max-w-xs"
+                        defaultValue={"Select alarm"}
+                      >
+                        <option disabled>Select alarm</option>
                         <option>Bird</option>
                         <option>Digital</option>
                         <option>Kitchen</option>
@@ -149,8 +152,46 @@ function App() {
                     </div>
                   </div>
 
-                  <div className="flex justify-end">
-                    <button type="submit" className="btn">
+                  <div className="divider"></div>
+
+                  <div className="color-container">
+                    <div className="theme flex flex-col items-start">
+                      <span className="flex items-center">
+                        <img
+                          className="w-6 h-6 mr-1"
+                          src="./theme.png"
+                          alt="theme image"
+                        />
+                        THEME
+                      </span>
+                    </div>
+
+                    <br />
+
+                    <div className="theme-container flex justify-between">
+                      <label htmlFor="theme">Theme</label>
+                      <select
+                        className="select select-bordered w-44 max-w-xs"
+                        defaultValue={"Select theme"}
+                      >
+                        <option disabled>Select theme</option>
+                        <option>Retro</option>
+                        <option>Valentine</option>
+                        <option>Aqua</option>
+                        <option>Coffee</option>
+                        <option>Synthwave</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <br />
+
+                  <br />
+
+                  <br />
+
+                  <div className="flex justify-end items-center mt-12 absolute bottom-0 left-0 right-0 h-16 bg-blue-400 ">
+                    <button type="submit" className="btn mr-5">
                       Ok
                     </button>
                   </div>

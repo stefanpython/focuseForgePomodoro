@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Clock() {
+function Clock({ pomodoroDefault, shortBreakDefault, longBreakDefault }) {
   const [activeButton, setActiveButton] = useState<string>("Pomodoro");
   const [startBtn, setStartBtn] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(25 * 60);

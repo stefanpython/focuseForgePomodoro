@@ -1,4 +1,14 @@
-const Navbar = ({
+import React from "react";
+
+interface NavbarProps {
+  pomodoroDefault: number;
+  shortBreakDefault: number;
+  longBreakDefault: number;
+  handleModalSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleCloseModal: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({
   pomodoroDefault,
   shortBreakDefault,
   longBreakDefault,

@@ -3,14 +3,14 @@ import "./index.css";
 import Clock from "./components/Clock";
 import Tasks from "./components/Tasks";
 import Navbar from "./components/Navbar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function App() {
-  // Set default values for Pomodoro, Short Break, and Long Break
-  const pomodoroDefault = 25;
-  const shortBreakDefault = 5;
-  const longBreakDefault = 15;
-
+  const [formData, setFormData] = useState({
+    pomodoro: 25,
+    short: 5,
+    long: 15,
+  });
   // Handle closing settings modal by pressing X
   const handleCloseModal = () => {
     const modal = document.getElementById("settings");
@@ -19,26 +19,24 @@ function App() {
     }
   };
 
-  const handleModalSubmit = () => {
-    console.log("form submite");
+  // Handle form submit in the settings modal
+  const handleModalSubmit = (values: any) => {
+    setFormData(values);
   };
+
   return (
     <div className="bg-base-200 min-h-screen">
       {/* Navbar container */}
 
       <Navbar
-        pomodoroDefault={pomodoroDefault}
-        shortBreakDefault={shortBreakDefault}
-        longBreakDefault={longBreakDefault}
+        pomodoroDefault={formData.pomodoro}
+        shortBreakDefault={formData.short}
+        longBreakDefault={formData.long}
         handleModalSubmit={handleModalSubmit}
         handleCloseModal={handleCloseModal}
       />
 
-      <Clock
-        pomodoroDefault={pomodoroDefault}
-        shortBreakDefault={shortBreakDefault}
-        longBreakDefault={longBreakDefault}
-      />
+      <Clock formData={formData} />
 
       <Tasks />
     </div>

@@ -1,11 +1,24 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-function Clock({ pomodoroDefault, shortBreakDefault, longBreakDefault }) {
+interface ClockProps {
+  formData: {
+    pomodoro: number;
+    short: number;
+    long: number;
+  };
+}
+
+const Clock: React.FC<ClockProps> = ({ formData }) => {
   const [activeButton, setActiveButton] = useState<string>("Pomodoro");
   const [startBtn, setStartBtn] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<number>(25 * 60);
+  const [timeLeft, setTimeLeft] = useState<number>(formData.pomodoro * 60);
   const [counter, setCounter] = useState<number>(0);
   const [round, setRound] = useState<number>(-1);
+
+  // Update timeLeft when formData changes
+  useEffect(() => {
+    setTimeLeft(formData.pomodoro * 60);
+  }, [formData]);
 
   // Increment round by 1 after going through a pomodoro + short/long break
   useEffect(() => {
@@ -67,13 +80,13 @@ function Clock({ pomodoroDefault, shortBreakDefault, longBreakDefault }) {
     setActiveButton(buttonName);
     switch (buttonName) {
       case "Pomodoro":
-        setTimeLeft(25 * 60);
+        setTimeLeft(formData.pomodoro * 60);
         break;
       case "Short Break":
-        setTimeLeft(5 * 60);
+        setTimeLeft(formData.short * 60);
         break;
       case "Long Break":
-        setTimeLeft(15 * 60);
+        setTimeLeft(formData.long * 60);
         break;
     }
   };
@@ -193,6 +206,6 @@ function Clock({ pomodoroDefault, shortBreakDefault, longBreakDefault }) {
       </div>
     </div>
   );
-}
+};
 
 export default Clock;

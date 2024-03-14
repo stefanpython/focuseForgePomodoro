@@ -1,10 +1,15 @@
 import React from "react";
+import { useState } from "react";
 
 interface NavbarProps {
   pomodoroDefault: number;
   shortBreakDefault: number;
   longBreakDefault: number;
-  handleModalSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleModalSubmit: (values: {
+    pomodoro: number;
+    short: number;
+    long: number;
+  }) => void;
   handleCloseModal: () => void;
 }
 
@@ -15,6 +20,28 @@ const Navbar: React.FC<NavbarProps> = ({
   handleModalSubmit,
   handleCloseModal,
 }) => {
+  const [formData, setFormData] = useState({
+    pomodoro: pomodoroDefault,
+    short: shortBreakDefault,
+    long: longBreakDefault,
+  });
+
+  // Update form input values
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submit
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleModalSubmit(formData);
+    handleCloseModal();
+  };
+
   // Handle opening settings modal
   const openModal = () => {
     const modal = document.getElementById("settings");
@@ -60,7 +87,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
             <div className="modal-action">
               <form
-                onSubmit={handleModalSubmit}
+                onSubmit={handleSubmit}
                 method="dialog"
                 className="flex flex-col justify-start"
               >
@@ -88,6 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         name="pomodoro"
                         className="input input-bordered w-16 sm:w-20 h-10 bg-slate-100"
                         defaultValue={pomodoroDefault}
+                        onChange={handleInputChange}
                       />
                     </div>
 
@@ -101,6 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         name="short"
                         className="input input-bordered w-16 sm:w-20 h-10 bg-slate-100"
                         defaultValue={shortBreakDefault}
+                        onChange={handleInputChange}
                       />
                     </div>
 
@@ -114,6 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         name="long"
                         className="input input-bordered w-16 sm:w-20 h-10 bg-slate-100"
                         defaultValue={longBreakDefault}
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>

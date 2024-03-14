@@ -7,7 +7,7 @@ interface FormData {
   checked: boolean;
 }
 
-function Tasks() {
+const Tasks = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showNoteInput, setShowNoteInput] = useState<boolean>(false);
@@ -384,6 +384,6 @@ function Tasks() {
       )}
     </div>
   );
-}
+};
 
 export default Tasks;

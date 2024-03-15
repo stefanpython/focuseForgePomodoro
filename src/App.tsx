@@ -20,8 +20,11 @@ function App() {
   };
 
   // Handle form submit in the settings modal
-  const handleModalSubmit = (values: any) => {
-    setFormData(values);
+  const handleModalSubmit = (values: FormData) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      ...values,
+    }));
   };
 
   return (

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface NavbarProps {
   pomodoroDefault: number;
@@ -9,6 +8,7 @@ interface NavbarProps {
     pomodoro: number;
     short: number;
     long: number;
+    alarmSound: string; // Add alarmSound to the form data type
   }) => void;
   handleCloseModal: () => void;
 }
@@ -24,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({
     pomodoro: pomodoroDefault,
     short: shortBreakDefault,
     long: longBreakDefault,
+    alarmSound: "", // Initialize alarmSound with an empty string
   });
 
   // Update form input values
@@ -32,6 +33,15 @@ const Navbar: React.FC<NavbarProps> = ({
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
+    }));
+  };
+
+  // Handle alarm sound selection
+  const handleAlarmSoundChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      alarmSound: value,
     }));
   };
 
@@ -170,13 +180,14 @@ const Navbar: React.FC<NavbarProps> = ({
                     <select
                       className="select select-bordered w-44 max-w-xs"
                       defaultValue={"Select alarm"}
+                      onChange={handleAlarmSoundChange}
                     >
                       <option disabled>Select alarm</option>
-                      <option>Bird</option>
-                      <option>Digital</option>
-                      <option>Kitchen</option>
-                      <option>Modern</option>
-                      <option>Owl</option>
+                      <option value="bird">Bird</option>
+                      <option value="digital">Digital</option>
+                      <option value="kitchen">Kitchen</option>
+                      <option value="modern">Modern</option>
+                      <option value="owl">Owl</option>
                     </select>
                   </div>
                 </div>

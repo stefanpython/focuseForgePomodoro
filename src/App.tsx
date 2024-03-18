@@ -11,6 +11,7 @@ function App() {
     short: 5,
     long: 15,
   });
+
   // Handle closing settings modal by pressing X
   const handleCloseModal = () => {
     const modal = document.getElementById("settings");

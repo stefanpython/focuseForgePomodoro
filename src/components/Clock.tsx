@@ -5,6 +5,7 @@ interface ClockProps {
     pomodoro: number;
     short: number;
     long: number;
+    alarmSound: string;
   };
 }
 
@@ -17,7 +18,7 @@ const Clock: React.FC<ClockProps> = ({ formData }) => {
 
   // Update timeLeft when formData changes
   useEffect(() => {
-    setTimeLeft(formData.pomodoro * 60);
+    setTimeLeft(1);
   }, [formData]);
 
   // Increment round by 1 after going through a pomodoro + short/long break
@@ -45,7 +46,11 @@ const Clock: React.FC<ClockProps> = ({ formData }) => {
   const startSound: HTMLAudioElement = new Audio("./hotel.mp3");
 
   // Create an audio element with the finish alarm file
-  const endSound: HTMLAudioElement = new Audio("./alarms/bird.mp3");
+  const endSound: HTMLAudioElement = new Audio(
+    formData.alarmSound
+      ? `./alarms/${formData.alarmSound}.mp3`
+      : "./alarms/bird.mp3"
+  );
 
   // Define the total session time based on the active button
   const totalSessionTime =

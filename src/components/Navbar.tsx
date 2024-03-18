@@ -8,7 +8,7 @@ interface NavbarProps {
     pomodoro: number;
     short: number;
     long: number;
-    alarmSound: string; // Add alarmSound to the form data type
+    alarmSound: string;
   }) => void;
   handleCloseModal: () => void;
 }

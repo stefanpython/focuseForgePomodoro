@@ -6,6 +6,7 @@ interface ClockProps {
     short: number;
     long: number;
     alarmSound: string;
+    theme: string;
   };
 }
 

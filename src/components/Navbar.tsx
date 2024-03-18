@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface NavbarProps {
   pomodoroDefault: number;
@@ -9,6 +9,7 @@ interface NavbarProps {
     short: number;
     long: number;
     alarmSound: string;
+    theme: string;
   }) => void;
   handleCloseModal: () => void;
 }
@@ -24,8 +25,14 @@ const Navbar: React.FC<NavbarProps> = ({
     pomodoro: pomodoroDefault,
     short: shortBreakDefault,
     long: longBreakDefault,
-    alarmSound: "", // Initialize alarmSound with an empty string
+    alarmSound: "",
+    theme: "light",
   });
+
+  // Update theme
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", formData.theme);
+  }, [formData]);
 
   // Update form input values
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +52,15 @@ const Navbar: React.FC<NavbarProps> = ({
     }));
   };
 
+  // Handle alarm sound selection
+  const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      theme: value,
+    }));
+  };
+
   // Handle form submit
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,6 +77,8 @@ const Navbar: React.FC<NavbarProps> = ({
       console.error("Element with ID 'settings' is not a modal");
     }
   };
+
+  console.log(formData);
 
   return (
     <div className="navbar navbar-center bg-base-200 space-x-20 sm:space-x-44 md:space-x-96 shadow">
@@ -213,13 +231,15 @@ const Navbar: React.FC<NavbarProps> = ({
                     <select
                       className="select select-bordered w-44 max-w-xs"
                       defaultValue={"Select theme"}
+                      onChange={handleThemeChange}
                     >
                       <option disabled>Select theme</option>
-                      <option>Retro</option>
-                      <option>Valentine</option>
-                      <option>Aqua</option>
-                      <option>Coffee</option>
-                      <option>Synthwave</option>
+                      <option value="light">Light</option>
+                      <option value="retro">Retro</option>
+                      <option value="valentine">Valentine</option>
+                      <option value="aqua">Aqua</option>
+                      <option value="coffee">Coffee</option>
+                      <option value="synthwave">Synthwave</option>
                     </select>
                   </div>
                 </div>

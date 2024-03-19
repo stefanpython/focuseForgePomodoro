@@ -262,7 +262,9 @@ const Tasks = () => {
                           : ""
                       }
                     >
-                      <p className="text-sm text-left">{task.note}</p>
+                      <p className="text-sm text-left text-slate-950">
+                        {task.note}
+                      </p>
                     </div>
                   </div>
 

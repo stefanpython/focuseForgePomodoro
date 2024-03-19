@@ -251,7 +251,7 @@ const Tasks = () => {
                   </div>
 
                   <div className="center flex flex-col p-3 pl-2 pr-2">
-                    <h5 className="break-words max-w-[290px] text-left font-semibold text-gray-600 text-xl">
+                    <h5 className="break-words max-w-[290px] text-left font-semibold text-xl">
                       {task.task}
                     </h5>
 

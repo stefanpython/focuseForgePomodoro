@@ -131,10 +131,18 @@ const Tasks = () => {
 
   // Handle delete button in edit form
   const handleDeleteTask = (index: number) => {
-    const updatedTasks = tasks.filter((_, i) => i !== index);
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setShowTaskForm(false);
+    const confrimation = window.confirm(
+      "Are you sure you want to delete task?"
+    );
+
+    if (confrimation) {
+      const updatedTasks = tasks.filter((_, i) => i !== index);
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      setShowTaskForm(false);
+    } else {
+      return;
+    }
   };
 
   // Handle clear all tasks button

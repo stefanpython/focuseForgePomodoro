@@ -19,7 +19,7 @@ const Clock: React.FC<ClockProps> = ({ formData }) => {
 
   // Update timeLeft when formData changes
   useEffect(() => {
-    setTimeLeft(1);
+    setTimeLeft(formData.pomodoro * 60);
   }, [formData]);
 
   // Increment round by 1 after going through a pomodoro + short/long break

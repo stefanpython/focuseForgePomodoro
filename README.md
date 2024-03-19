@@ -53,8 +53,8 @@ yarn start
 
 ### Usage
 
-Set your preferred durations for Pomodoro sessions, Short Breaks, and Long Breaks in the Settings modal.
-Click the "Start" button to begin a Pomodoro session.
-Focus on your task during the Pomodoro session until the timer rings.
-Take short breaks during Short Break sessions and longer breaks during Long Break sessions to relax and recharge.
-Manage your tasks using the Tasks section.
+- Set your preferred durations for Pomodoro sessions, Short Breaks, and Long Breaks in the Settings modal.
+- Click the "Start" button to begin a Pomodoro session.
+- Focus on your task during the Pomodoro session until the timer rings.
+- Take short breaks during Short Break sessions and longer breaks during Long Break sessions to relax and recharge.
+- Manage your tasks using the Tasks section.

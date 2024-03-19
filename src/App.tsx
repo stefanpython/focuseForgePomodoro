@@ -37,7 +37,7 @@ function App() {
   };
 
   return (
-    <div className="bg-base-200 min-h-screen">
+    <div className="bg-base-200 min-h-screen -mr-2 sm:mr-0">
       {/* Navbar container */}
 
       <Navbar

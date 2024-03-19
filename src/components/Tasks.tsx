@@ -258,7 +258,7 @@ const Tasks = () => {
                     <div
                       className={
                         task.note
-                          ? `bg-yellow-100 p-1 rounded-sm w-[300px]`
+                          ? `bg-yellow-100 p-1 rounded-sm sm:w-[300px] w-[250px]`
                           : ""
                       }
                     >
@@ -286,13 +286,13 @@ const Tasks = () => {
           })}
       </div>
 
-      <div className="task-form-container" ref={handleFormRef}>
+      <div className="task-form-container " ref={handleFormRef}>
         {showTaskForm && (
           <form
             onSubmit={handleSubmit}
-            className="card w-96 bg-base-100 shadow-xl m-auto"
+            className="card sm:w-96 w-80 bg-base-100 shadow-xl m-auto "
           >
-            <div className="card-body">
+            <div className="card-body ">
               <h2 className="card-title">
                 <input
                   type="text"

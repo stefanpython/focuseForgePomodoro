@@ -10,6 +10,8 @@ function App() {
     pomodoro: 25,
     short: 5,
     long: 15,
+    theme: "",
+    alarmSound: "",
   });
 
   // Handle closing settings modal by pressing X
@@ -21,7 +23,13 @@ function App() {
   };
 
   // Handle form submit in the settings modal
-  const handleModalSubmit = (values: FormData) => {
+  const handleModalSubmit = (values: {
+    pomodoro: number;
+    short: number;
+    long: number;
+    alarmSound: string;
+    theme: string;
+  }) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       ...values,

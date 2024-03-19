@@ -78,8 +78,6 @@ const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
-  console.log(formData);
-
   return (
     <div className="navbar navbar-center bg-base-200 space-x-20 sm:space-x-44 md:space-x-96 shadow">
       <div className="navbar-end p-3 pl-12">

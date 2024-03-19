@@ -235,14 +235,14 @@ const Tasks = () => {
                   <div className="left ml-2">
                     {task.checked ? (
                       <img
-                        className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                        className="w-6 flex justify-start hover:bg-slate-400 rounded-full cursor-pointer "
                         src="./check2.png"
                         alt="checked image"
                         onClick={() => handleToggleChecked(originalIndex)}
                       />
                     ) : (
                       <img
-                        className="w-6 flex justify-start hover:bg-slate-200 rounded-full cursor-pointer"
+                        className="w-6 flex justify-start hover:bg-slate-400 rounded-full cursor-pointer bg-white"
                         src="./check.png"
                         alt="checked image"
                         onClick={() => handleToggleChecked(originalIndex)}

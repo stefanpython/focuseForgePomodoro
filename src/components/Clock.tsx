@@ -119,6 +119,10 @@ const Clock: React.FC<ClockProps> = ({ formData }) => {
     }
   };
 
+  useEffect(() => {
+    document.title = `${formatTime(timeLeft)} - ${activeButton} - FocusForge`;
+  }, [timeLeft, activeButton]);
+
   return (
     <div className="clock-container pl-2 pr-2 -mt-4">
       <progress

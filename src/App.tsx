@@ -3,15 +3,23 @@ import "./index.css";
 import Clock from "./components/Clock";
 import Tasks from "./components/Tasks";
 import Navbar from "./components/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [formData, setFormData] = useState({
-    pomodoro: 25,
-    short: 5,
-    long: 15,
-    theme: "",
-    alarmSound: "",
+  // Retrieve timer settings from localStorage or use default values
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("settings");
+    if (savedData) {
+      return JSON.parse(savedData);
+    } else {
+      return {
+        pomodoro: 25,
+        short: 5,
+        long: 15,
+        theme: "",
+        alarmSound: "",
+      };
+    }
   });
 
   // Handle closing settings modal by pressing X
@@ -21,6 +29,11 @@ function App() {
       (modal as HTMLDialogElement).close();
     }
   };
+
+  // Save timer settings to localStorage when formData changes
+  useEffect(() => {
+    localStorage.setItem("settings", JSON.stringify(formData));
+  }, [formData]);
 
   // Handle form submit in the settings modal
   const handleModalSubmit = (values: {

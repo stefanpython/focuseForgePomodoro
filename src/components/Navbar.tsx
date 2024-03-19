@@ -21,12 +21,19 @@ const Navbar: React.FC<NavbarProps> = ({
   handleModalSubmit,
   handleCloseModal,
 }) => {
-  const [formData, setFormData] = useState({
-    pomodoro: pomodoroDefault,
-    short: shortBreakDefault,
-    long: longBreakDefault,
-    alarmSound: "",
-    theme: "light",
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("settings");
+    if (savedData) {
+      return JSON.parse(savedData);
+    } else {
+      return {
+        pomodoro: pomodoroDefault,
+        short: shortBreakDefault,
+        long: longBreakDefault,
+        alarmSound: "",
+        theme: "light",
+      };
+    }
   });
 
   // Update theme

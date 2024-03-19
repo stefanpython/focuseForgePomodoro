@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({
   // Update form input values
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
+    setFormData((prevFormData: NavbarProps) => ({
       ...prevFormData,
       [name]: value,
     }));
@@ -53,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({
   // Handle alarm sound selection
   const handleAlarmSoundChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
-    setFormData((prevFormData) => ({
+    setFormData((prevFormData: NavbarProps) => ({
       ...prevFormData,
       alarmSound: value,
     }));
@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({
   // Handle alarm sound selection
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
-    setFormData((prevFormData) => ({
+    setFormData((prevFormData: NavbarProps) => ({
       ...prevFormData,
       theme: value,
     }));

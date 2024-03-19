@@ -5,6 +5,14 @@ import Tasks from "./components/Tasks";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";
 
+interface FormDataState {
+  pomodoro: number;
+  short: number;
+  long: number;
+  alarmSound: string;
+  theme: string;
+}
+
 function App() {
   // Retrieve timer settings from localStorage or use default values
   const [formData, setFormData] = useState(() => {
@@ -43,7 +51,7 @@ function App() {
     alarmSound: string;
     theme: string;
   }) => {
-    setFormData((prevFormData) => ({
+    setFormData((prevFormData: FormDataState) => ({
       ...prevFormData,
       ...values,
     }));
